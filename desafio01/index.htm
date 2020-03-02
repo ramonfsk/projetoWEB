@@ -1,0 +1,27 @@
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="./css/style.css">
+        <title>Desafio 01</title>
+    </head>
+
+    <body>
+        <form class="numbersForCalc">
+            <fieldset>
+                <legend>Calculadora</legend>
+                <label for="firstNumber">Digite o primeiro numero:</label>
+                <input type="text" id="firstNumber" required>
+                <label for="secondNumber">Digite o segundo numero:</label>
+                <input type="text" id="secondNumber" required><br/>
+                <button type="submit" onclick="chooseOperator('+')">+</button>
+                <button type="submit" onclick="chooseOperator('-')">-</button>
+                <button type="submit" onclick="chooseOperator('/')">/</button>
+                <button type="submit" onclick="chooseOperator('x')">x</button>
+            </fieldset>
+        </form>
+    </body>
+
+    <footer>
+        <script src="./js/script.js"></script>
+    </footer>
+</html>
