@@ -1,7 +1,11 @@
 function selecionarMaterias() {
-    var checkboxs = document.getElementsByName('chkMateria');
+    let checkboxs = document.getElementsByName('chkMateria');
+    let divConteudo = document.getElementById('divConteudo');
+
     checkboxs.forEach(checkbox => {
-        if(checkbox.checked == true)
-            alert(`${checkbox.id}`);
+        if(checkbox.checked == true) {
+            //alert(`${checkbox.id}`);
+            divConteudo.innerHTML += checkbox.id;
+        }
     });
 }
