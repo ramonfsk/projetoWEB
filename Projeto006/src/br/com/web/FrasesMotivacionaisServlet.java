@@ -1,9 +1,5 @@
 package br.com.web;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Random;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,10 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 public class FrasesMotivacionaisServlet extends HttpServlet {
 	
 	private String phrases[] = {
-			"A persistência é o caminho do êxito. - Charles Chaplin",
-			"As pessoas costumam dizer que a motivação não dura sempre. Bem, nem o efeito do banho, por isso recomenda-se diariamente. - Zig Ziglar",
-			"Motivação é a arte de fazer as pessoas fazerem o que você quer que elas façam porque elas o querem fazer. - Dwight Eisenhower",
-			"Toda ação humana, quer se torne positiva ou negativa, precisa depender de motivação. - Dalai Lama"
+			"A persistï¿½ncia ï¿½ o caminho do ï¿½xito. - Charles Chaplin",
+			"As pessoas costumam dizer que a motivaï¿½ï¿½o nï¿½o dura sempre. Bem, nem o efeito do banho, por isso recomenda-se diariamente. - Zig Ziglar",
+			"Motivaï¿½ï¿½o ï¿½ a arte de fazer as pessoas fazerem o que vocï¿½ quer que elas faï¿½am porque elas o querem fazer. - Dwight Eisenhower",
+			"Toda aï¿½ï¿½o humana, quer se torne positiva ou negativa, precisa depender de motivaï¿½ï¿½o. - Dalai Lama"
 	};
 	
 	private String randomPhrase(String phrases[]) {
