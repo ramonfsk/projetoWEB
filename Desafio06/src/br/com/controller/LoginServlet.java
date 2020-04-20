@@ -7,19 +7,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.bo.CarroBO;
+import br.com.bo.UserBO;
 
 /**
- * Servlet implementation class CarroServlet
+ * Servlet implementation class LoginServlet
  */
-@WebServlet("/CarroServlet")
-public class CarroServlet extends HttpServlet {
+@WebServlet("/LoginServlet")
+public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CarroServlet() {
+    public LoginServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,15 +36,26 @@ public class CarroServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		CarroBO carroBO = new CarroBO();
-		String resultado = carroBO.insereCarro(request.getParameter("txtModeloVeiculo"), request.getParameter("txtFabricanteVeiculo"));
+		UserBO userBO = new UserBO();
+		String result = userBO.login(request.getParameter("txtEmail"), request.getParameter("txtPassword"));
 		
-		if(resultado == "Resultado.jsp")
-			request.setAttribute("mensagem", "Inserção realizada com sucesso!");
-		else
-			request.setAttribute("mensagem", "Deu ruim!");
+		if(result.equals("home.jsp")) {
+			request.setAttribute(
+					"msg",
+					"<div class=\"alert alert-success\" role=\"alert\">\n" + 
+					"  A simple success alert—check it out!\n" + 
+					"</div>"
+			);
+		} else {
+			request.setAttribute(
+					"msg",
+					"<div class=\"alert alert-danger\" role=\"alert\">\n" + 
+					"  A simple danger alert—check it out!\n" + 
+					"</div>"
+			);
+		}
 		
-		request.getRequestDispatcher(resultado).forward(request, response);
+		request.getRequestDispatcher(result).forward(request, response);
 	}
 
 }
