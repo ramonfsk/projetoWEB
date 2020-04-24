@@ -7,19 +7,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.bo.UserBO;
+import br.com.bean.CarBean;
+import br.com.bo.CarBO;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class FindCarServlet
  */
-@WebServlet("/LoginServlet")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/FindCarServlet")
+public class FindCarServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
+    public FindCarServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,26 +37,35 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		UserBO userBO = new UserBO();
-		String result = userBO.login(request.getParameter("txtEmail"), request.getParameter("txtPassword"));
+		CarBO carBO = new CarBO();
+		CarBean car = carBO.findCar(request.getParameter("txtModelCar"));
 		
-		if(result.equals("home.jsp")) {
-			request.setAttribute(
-					"msg",
-					"<div class=\"alert alert-success\" role=\"alert\">\n" + 
-						"Usuário "+request.getParameter("txtEmail")+" logado com sucesso!\n" + 
-					"</div>"
-			);
-		} else {
+		if(car == null) {
 			request.setAttribute(
 					"msg",
 					"<div class=\"alert alert-danger\" role=\"alert\">\n" + 
-						"Senha ou login incorretos!\n" + 
+					"  Modelo "+request.getParameter("txtModelCar")+" não encontrado!\n" + 
 					"</div>"
 			);
-		}
-		
-		request.getRequestDispatcher(result).forward(request, response);
+			request.getRequestDispatcher("home.jsp").forward(request, response);
+		} else {
+			request.setAttribute(
+					"table",
+					"<table class=\"table table-bordered\">"+
+						"<thead>" +
+							"<tr>" +
+								"<th scope=\"col\">Modelo</th>" +
+								"<th scope=\"col\">Marca</th>" +
+							"</tr>" +
+						"</thead>" +
+						"<tbody>" +
+							"<td>"+car.getModel()+"</td>" +
+							"<td>"+car.getBrand()+"</td>" +
+						"</tbody>" +
+					"</table>"
+			);
+			request.getRequestDispatcher("findCar.jsp").forward(request, response);
+		}	
 	}
 
 }
