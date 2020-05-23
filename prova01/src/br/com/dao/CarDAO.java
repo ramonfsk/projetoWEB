@@ -1,6 +1,6 @@
 package br.com.dao;
 
-import java.util.ArrayList;
+import java.util.ArrayList; 
 import java.util.List;
 import br.com.bean.CarBean;
 import java.sql.Connection;
@@ -42,7 +42,7 @@ public class CarDAO {
 		String sql = "UPDATE car SET brand = ?, model = ?, model_year =?, chassi = ?, plate_license = ?, availability = ? WHERE id_car = ?";
 		
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = conn.prepareStatement(sql);			
 			ps.setString(1, carBean.getBrand());
 			ps.setString(2, carBean.getModel());
 			ps.setString(3, carBean.getModelYear());
@@ -50,12 +50,85 @@ public class CarDAO {
 			ps.setString(5, carBean.getPlateLicense());
 			ps.setBoolean(6, carBean.isAvailability());
 			ps.setInt(7, carBean.getId());
-			ps.execute();
-			ps.close();
-			return true;
+			if(ps.executeUpdate() == 1) {
+				ps.close();
+				return true;
+			} else {
+				ps.close();
+			}
 		} catch (Exception e) {
 			throw new RuntimeException("Erro ao atualizar carro "+e);
 		}
+		return false;
+	}
+	
+	public boolean remCar(CarBean car) {
+		String sql = "DELETE FROM car WHERE id_car = "+car.getId();
+		
+		try {
+			st = conn.createStatement();
+			if(st.executeUpdate(sql) == 1) {
+				st.close();
+				return true;
+			} else {
+				st.close();
+			}
+		} catch (Exception e) {
+			throw new RuntimeException("Erro ao remover o carro "+e);
+		}
+		return false;
+	}
+	
+	public CarBean getCarToId(int id) {
+		String sql = "SELECT * FROM car WHERE id_car = "+id;
+		
+		try {
+			st = conn.createStatement();
+			rs = st.executeQuery(sql);
+			if(rs.next()) {
+				CarBean car = new CarBean(
+						rs.getString("brand"), 
+						rs.getString("model"), 
+						rs.getString("model_year"),
+						rs.getString("chassi"),
+						rs.getString("plate_license"),
+						rs.getBoolean("availability")
+				);
+				car.setId(rs.getInt("id_car"));
+				return car;
+			}
+			
+		} catch (Exception e) {
+			throw new RuntimeException("Erro ao buscar carro "+e);
+		}
+		return null;
+	}
+	
+	public List<CarBean> getCarsToModel(String model) {
+		List<CarBean> cars = new ArrayList<CarBean>();
+		String sql = "SELECT * FROM car WHERE model = ?";
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, model);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				CarBean car = new CarBean(
+						rs.getString("brand"), 
+						rs.getString("model"), 
+						rs.getString("model_year"),
+						rs.getString("chassi"),
+						rs.getString("plate_license"),
+						rs.getBoolean("availability")
+				);	
+				car.setId(rs.getInt("id_car"));
+				cars.add(car);
+			}
+		} catch (Exception e) {
+			throw new RuntimeException("Erro ao buscar carros "+e);
+		}
+		return cars;
 	}
 	
 	public List<CarBean> listCars() {

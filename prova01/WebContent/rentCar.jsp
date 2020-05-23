@@ -35,7 +35,7 @@
 			    				<td>${ car.getChassi() }</td>
 			    				<td>${ car.getPlateLicense() }</td>
 			    				<td>
-			    					<button class="btn btn-success" onClick="rentCar(${ car.getId() })">Alugar</button>
+			    					<button class="btn btn-success" id="btnSubmit" value="rent" onClick="rentCar(${ car.getId() })">Alugar</button>
 			    				</td>
 			    			</tr>
 			    		</c:forEach>

@@ -14,7 +14,7 @@
 		<%@ include file="navbar.jsp" %>
 		<main role="main">
 		  <div class="container">
-			    <h1 class="mt-5">Lista de Carros</h1>
+			    <h1 class="mt-5">Lista de Veiculos</h1>
 			    <table class="table table-bordered">
 			    	<thead>
 			    		<tr>
@@ -23,7 +23,7 @@
 			    			<th scope="col">Ano</th>
 			    			<th scope="col">Chassi</th>
 			    			<th scope="col">Placa</th>
-			    			<th scope="col">Disponível?</th>
+			    			<th scope="col">Ações</th>
 			    		</tr>
 			    	</thead>
 			    	<tbody>
@@ -34,7 +34,15 @@
 			    				<td>${ car.getModelYear() }</td>
 			    				<td>${ car.getChassi() }</td>
 			    				<td>${ car.getPlateLicense() }</td>
-			    				<td>${ car.isAvailability() }</td>
+			    				<td>
+				    				<div class="btn-group" role="group">
+				    					<form method="POST" action="CarServlet" id="formToEditCar">
+				    						<input type="hidden" name="idCar" value=${ car.getId() } />
+				    						<button class="btn btn-success" name="btnSubmit" value="edit">Editar</button>
+				    					</form>
+				    					<button class="btn btn-danger" id="btnRem" value="rem" onClick="remCar(${ car.getId() })">Remover</button>
+				    				</div>
+			    				</td>
 			    			</tr>
 			    		</c:forEach>
 			    	</tbody>

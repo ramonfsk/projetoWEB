@@ -19,6 +19,26 @@ public class CarBO {
 			return "error.jsp";
 	}
 	
+	public String editCar(int idCar, String brand, String model, String modelYear, String chassi, String plateLicense, boolean availability) {
+		CarBean car = new CarBean(brand, model, modelYear, chassi, plateLicense, availability);
+		car.setId(idCar);
+		
+		if(carDAO.updateCar(car))
+			return "home.jsp";
+		else
+			return "error.jsp";
+	}
+	
+	public String remCar(int id) {
+		for(CarBean car : carDAO.listCars()) {
+			if(car.getId() == id) {
+				if(carDAO.remCar(car))
+					return "home.jsp";
+			}
+		}
+		return "error.jsp";
+	}
+	
 	public List<CarBean> listCars() {
 		return carDAO.listCars();
 	}
@@ -44,11 +64,11 @@ public class CarBO {
 		return "error.jsp";
 	}
 
-	public CarBean findCar(String model) {
-		for(CarBean car : carDAO.listCars()) {
-			if(car.getModel().toLowerCase().equals(model.toLowerCase()))
-				return car;
-		}
-		return null;
+	public List<CarBean> findCarByModel(String model) {		
+		return carDAO.getCarsToModel(model);
+	}
+	
+	public CarBean findCarById(int id) {
+		return carDAO.getCarToId(id);
 	}
 }
